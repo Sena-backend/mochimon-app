@@ -2,7 +2,11 @@ body {
     margin: 0;
     padding-top: 120px; /* ヘッダーエリアの高さ分、上に余白を持たせる */
     padding-bottom: 60px; /* 下部メニューの高さ分、下に余白を持たせる */
+    align-items: center;
+    justify-content: center;
     font-family: sans-serif;
+    display: flex;
+    overflow: hidden; /* bodyでスクロールさせない */
 }
 
 .app-content {
@@ -22,11 +26,21 @@ body {
     padding: 0 20px; /* 左右にパディングを設定 */
     box-sizing: border-box; /* paddingを含めて幅を計算 */
     z-index: 1000; /* 下部メニューと同じか、必要に応じて調整 */
-    background-color: #e0ffff;
+    background-color: #a2d0d0;
+}
+
+.header-area h1{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: "Book Antiqua";
+  font-size: 1.5em;
 }
 
 .login-button {
-    background-color: #e0ffff;
+    background-color: #a2d0d0;
+    margin-left: auto;
     color: #333; /* ボタンの文字色 */
     padding: 8px 16px;
     border: none;
@@ -35,17 +49,75 @@ body {
     font-size: 32px;
 }
 
+/* ダッシュボードコンテナ */
+.dashboard {
+  width: 90%;
+  max-width: 400px;
+  margin-top: 30px;
 
-/*ハンバーガーボタン*/
-.hamburger-button {
-    background-color: transparent;
-    border: none;
+  /* スクロールエリア */
+  height: 90vh;               /* 画面高の90% */
+  overflow-y: auto;           /* 縦スクロール可 */
+  padding: 8px 20px;
+  height: calc(70vh);
+}
+
+.dashboard::-webkit-scrollbar {
+  width: 6px;
+}
+.dashboard::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.dashboard a{
+  text-decoration: none;
+}
+
+
+/* 予定カード */
+.card {
+  position: relative;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 2px solid #a2d0d0;
+}
+
+/* 予定のタイトル */
+.card h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.2em;
+  color: #222;
+}
+
+/* 予定の詳細 */
+.card p {
+  margin: 4px 0;
+  color: #666;
+}
+
+.edit-button {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 0.9em;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #f8f8f8;
+    padding: 4px 8px;
+    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     cursor: pointer;
-    padding: 10px; /* クリックエリアを確保 */
-    font-size: 32px;
-    box-sizing: border-box;
-    width: auto;  /* アイコンサイズに合わせるためautoに、または固定値を指定 */
-    height: auto; /* アイコンサイズに合わせるためautoに、または固定値を指定 */
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #e0f0f0;
 }
 
 /*メニューボタン*/
@@ -65,21 +137,22 @@ body {
 }
 
 .menu-button {
-    background-color: transparent;
-    border: none;
-    color: #333; /* ボタンの文字色 */
-    cursor: pointer;
+    flex: 1 1 0;
     display: flex;
-    flex-direction: column; /* アイコンとテキストを縦に並べる場合 */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-grow: 1; /* 各ボタンが均等に幅を取るようにする */
     height: 100%;
+    background-color: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
     padding: 5px 0;
     margin-top: 5px;
-    font-size: 24px; /* テキストのフォントサイズ */
+    font-size: 24px;
     text-decoration: none;
 }
+
 
 .bottom-menu p{
     font-size: 12px;
@@ -87,7 +160,7 @@ body {
 }
 
 .select{
-    color: #d3d3d3; /* ボタンの文字色 */
+    color: #a2d0d0; /* ボタンの文字色 */
 }
 
 .menu-button:hover {
@@ -100,4 +173,19 @@ body {
 
 .menu-button span {
     display: block;
+}
+
+.section-title {
+    font-size: 20px;
+    margin: 0 0 16px 0;
+    color: #333;
+    border-left: 4px solid #76c7c0;
+    padding-left: 8px;
+}
+
+.no-event-message {
+    text-align: center;
+    margin: 0px;
+    font-size: 14px;
+    color: #888;
 }

@@ -1,0 +1,277 @@
+import dayjs from "https://esm.sh/dayjs";
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+import { getFirestore, addDoc, getDoc, getDocs, deleteDoc, query, collection, doc, where, Timestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+// Firebase設定（apiKeyは実際のものに置き換えてください）
+const firebaseConfig = {
+    databaseURL: "https://mochimon-base-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    apiKey: "AIzaSyChPt5NDvgd4okxbUQalZtrS7w6Tm30fgg",
+    authDomain: "mochimon-base.firebaseapp.com",
+    projectId: "mochimon-base",
+    storageBucket: "mochimon-base.firebasestorage.app",
+    messagingSenderId: "5202457046",
+    appId: "1:5202457046:web:7233c6b556a7d260803477",
+    measurementId: "G-GPT541EW6S"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+let currentUser = null;
+
+// ユーザーの認証状態が変わるたびにcurrentUserにセット
+onAuthStateChanged(auth, async (user) => {
+    currentUser = user;
+    
+    // 送られてきたリストの取得
+    try{
+        const shareListId = await getDocs(query(collection(db, "sharedEvents"), where("to", "==", user.email)));
+        const shareListsData = shareListId.docs.map(doc => ({
+            id: doc.id,
+            ... doc.data()
+        }));
+        
+        const dashboard = document.getElementById('share-dashboard');
+        const bodies = [];
+        // リストの参照
+        if(shareListsData.length > 0){
+            for(const shareListData of shareListsData){
+                const shareEvents = await getDoc(doc(db, shareListData.fromId, shareListData.list));
+                if(shareEvents.data()){
+
+                    // リストの表示
+                    const body = document.createElement('div');
+                    body.setAttribute('class', 'card-group');
+                    body.setAttribute('id', shareListData.fromId + '?' + shareListData.list);
+                    bodies.push(body);
+                    
+                    const title = document.createElement('span');
+                    title.setAttribute('class', 'owner-label');
+                    title.textContent = shareListData.from + 'さん';
+                    body.appendChild(title);
+
+                    const ref = document.createElement('a');
+                    body.appendChild(ref);
+
+                    const card = document.createElement('div');
+                    card.setAttribute('class', 'card');
+                    body.appendChild(card);
+                    
+                    const date = document.createElement('H2');
+                    const startDate = new Date(shareEvents.data().startDate.seconds *1000);
+                    date.textContent = dayjs(startDate).format('YYYY年MM月DD日');
+                    card.appendChild(date);
+
+                    const eventTitle = document.createElement('H2');
+                    eventTitle.textContent = shareEvents.data().eventName;
+                    card.appendChild(eventTitle);
+
+                    const rate = document.createElement('p');
+                    let sum = 0;
+                    let checkItem = 0;
+                    const items = shareEvents.data().itemArray || [];
+                    items.forEach(eventItem => {
+                        sum++;
+                        if(eventItem.isChecked){
+                            checkItem++;
+                        }
+                    })
+                    if(sum === 0){
+                        rate.textContent = "持ち物リストが空です";
+                    }else{
+                        rate.textContent = Math.round(checkItem / sum * 100) + '%';
+                    }
+                    card.appendChild(rate);
+
+
+
+                    body.addEventListener('click', () => {
+                        // イベント情報を localStorage に保存
+                        localStorage.setItem('selectedShredEvent', JSON.stringify({
+                            id: shareEvents.data().id,
+                            eventName: shareEvents.data().eventName,
+                            startDate: shareEvents.data().startDate,
+                            endDate: shareEvents.data().endDate,
+                            isAllDay: shareEvents.data().isAllDay
+                        }));
+
+                        // EventEdit.html に遷移
+                        window.location.href = `SelectDate.html?eventId=${body.id}`;
+                    });
+                }else{
+                    await deleteDoc(doc(db, "sharedEvents", shareListData.id));
+                }   
+            }
+        }
+        
+        for(const cardBody of bodies){
+            dashboard.appendChild(cardBody);
+        }
+        if(bodies.length === 0){
+            // 予定が1件もない場合のメッセージ
+            const noEventMessage = document.createElement('p');
+            noEventMessage.textContent = '共有された予定はありません';
+            noEventMessage.classList.add('no-event-message');  // CSSで装飾可能
+            dashboard.appendChild(noEventMessage);
+        }
+    }catch(error){
+        console.log(error);
+    }
+
+    // 現在以降の予定の取得
+    try{
+        const nowDate = Timestamp.now();
+        const getList = await getDocs(query(collection(db, user.uid), where("tag" , "==", "Event")));
+        console.log(getList);
+        const dashBoard = document.getElementById('dashboard');
+        getList.forEach(doc => {
+            if(doc.data().startDate >= nowDate){
+                const card = document.createElement('div');
+                card.setAttribute('class', 'overlay-card');
+                card.setAttribute('id', doc.id);
+                const title = document.createElement('h2');
+                title.textContent = doc.data().eventName;
+                
+                const date = document.createElement('p');
+                const time = document.createElement('p');
+                const start = new Date(doc.data().startDate.seconds * 1000);
+                const end = new Date(doc.data().endDate.seconds * 1000);
+                if(start.toISOString().split('T')[0] == end.toISOString().split('T')[0]){
+                    date.textContent = dayjs(start).format("YYYY年MM月DD日")
+                    if(doc.data().isAllday){
+                        time.textContent = "終日";
+                    }else{
+                        time.textContent = dayjs(start).format("HH:mm")
+                                            + " ~ " + 
+                                            dayjs(end).format("HH:mm")
+                    }
+                }else{
+                    if(doc.data().isAllday){
+                        date.textContent = dayjs(start).format("YYYY年MM月DD日") + " 終日";
+                        time.textContent = "~ " + dayjs(end).format("YYYY年MM月DD日 HH:mm") + " 終日";
+                        
+                    }else{
+                        date.textContent = dayjs(start).format("YYYY年MM月DD日 HH:mm");
+                        time.textContent = "~ " + dayjs(end).format("YYYY年MM月DD日 HH:mm");
+                    }
+                }
+
+                    
+                const rate = document.createElement('p');
+                let sum = 0;
+                let checkItem = 0;
+                console.log(doc.data());
+                doc.data().itemArray.forEach(eventItem => {
+                    sum++;
+                    if(eventItem.isChecked){
+                        checkItem++;
+                    }
+                })
+                if(sum === 0){
+                    rate.textContent = "持ち物リストが空です";
+                }else{
+                    rate.textContent = `${Math.round(checkItem / sum * 100)}% (${checkItem}/${sum})`;
+                }
+
+                card.appendChild(title);
+                card.appendChild(date);
+                card.appendChild(time);
+                card.appendChild(rate);
+                dashBoard.appendChild(card);
+            }
+        })
+    }catch(error){
+        console.log(error);
+    }
+
+    document.getElementById("add-event-btn").addEventListener("click", () => {
+        document.getElementById("modal-overlay").style.display = "flex";
+    });
+
+    document.getElementById("close-modal").addEventListener("click", () => {
+        document.getElementById("modal-overlay").style.display = "none";
+    });
+
+    // 予定カードの選択処理
+    const overlayCards = document.querySelectorAll('.overlay-card');
+    let selectedCard = null;
+
+    overlayCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            if (selectedCard) {
+                selectedCard.classList.remove('selected');
+            }
+
+            card.classList.add('selected');
+            selectedCard = card;
+        });
+    });
+
+    document.getElementById("submit-event").addEventListener("click", async () => {
+        // 入力フォームは your-name と receiver-email だと思うので取得
+        const yourName = document.getElementById("your-name").value.trim();
+        const receiverEmail = document.getElementById("receiver-email").value.trim();
+
+        if (!yourName || !receiverEmail || !selectedCard) {
+            alert("名前・メール・予定を選択してください");
+            return;
+        }
+
+        // Firebaseに送るデータを作成
+        const sharedEventData = {
+            from: yourName, // 送り主の名前
+            fromId: user.uid, //送り主のユーザID
+            to: receiverEmail, //宛先メールアドレス
+            timestamp: new Date().toISOString(),
+            isRead: false,
+            list: selectedCard.id
+        };
+        const sharedEventsRef = collection(db, "sharedEvents");
+        // Firebaseにデータ登録
+        addDoc(sharedEventsRef, sharedEventData)
+            .then(() => {
+                alert("予定を共有しました！");
+                // モーダル閉じてフォームや選択リセット
+                document.getElementById("modal-overlay").style.display = "none";
+                document.getElementById("your-name").value = "";
+                document.getElementById("receiver-email").value = "";
+                if (selectedCard) selectedCard.classList.remove('selected');
+                selectedCard = null;
+            })
+            .catch((error) => {
+                console.error("保存エラー:", error);
+                alert("共有に失敗しました");
+            });
+    });
+
+});
+
+const iconBtn = document.getElementById("user-icon-btn");
+
+// ユーザーの認証状態が変わるたびにcurrentUserにセット
+onAuthStateChanged(auth, (user) => {
+currentUser = user;
+console.log("Auth state changed:", user);
+});
+
+
+if (iconBtn) {
+    iconBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        console.log("Clicked. currentUser:", currentUser);
+        if (currentUser) {
+        console.log("認証済みなのでマイページへ遷移");
+        window.location.href = "../Mypage.html";
+        } else {
+        console.log("未認証なのでログインへ遷移");
+        window.location.href = "../Login.html";
+        }
+    });
+}
+
+document.querySelector('.header-area h1').addEventListener('click', () => {
+    window.location.href = 'Home.html';
+})

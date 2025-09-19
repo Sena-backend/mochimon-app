@@ -9,21 +9,27 @@
     </head>
 
     <body>
-        <div class="header-area">
-            <button class="hamburger-button" aria-label="menu">
-                <span>
-                    <i class="fa-solid fa-bars"></i>
-                </span>
-            </button>
-
-            <h1>Mochimon</h1>
-            
-            <a href="Login.html" class="login-button">
+        <div class="header-area" id="header">
+            <h1>M o c h i m o n</h1>
+            <a id="user-icon-btn" href="../Login.html" class="login-button">
                 <span>
                     <i class="fa-regular fa-user"></i>
                 </span>
             </a>
         </div>
+        
+        <div class="dashboard" id="dashboard-origin">
+            <h2 class="section-title">オリジナルテンプレート</h2>
+        </div>
+        <div class="dashboard" id="dashboard-default">
+            <h2 class="section-title">デフォルトテンプレート</h2>
+        </div>
+
+        <a href="EditTemplate.html">
+            <button id="add-event-btn" class="add-event-btn" aria-label="テンプレートを追加" title="新規テンプレート作成">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </a>    
 
         <nav class="bottom-menu">
             <a href="Home.html" class="menu-button">
@@ -42,7 +48,7 @@
                 <span class="select">
                     <i class="fa-solid fa-bookmark"></i>
                 </span>
-                <p>テンプレート</p>
+                <p class="select">テンプレート</p>
             </a>
             <a href="Shopping.html" class="menu-button">
                 <span>
@@ -58,6 +64,22 @@
             </a>
         </nav>
 
+        <div class="modal" id="template-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">新規テンプレート作成</h2>
+                    <span class="close-btn" id="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="template-name" class="modal-input" placeholder="テンプレート名を入力" />
+                    <button class="create-btn" id="create-template-btn">作成</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script type="module" src="Template.js"></script>
     </body>
 
 </html>

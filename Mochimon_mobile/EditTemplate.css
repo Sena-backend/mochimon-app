@@ -1,0 +1,359 @@
+body {
+    margin: 0;
+    padding: 0;
+    padding-top: 120px; /* ヘッダーエリアの高さ分、上に余白を持たせる */
+    padding-bottom: 60px; /* 下部メニューの高さ分、下に余白を持たせる */
+    font-family: sans-serif;
+}
+
+.app-content {
+    padding: 20px;
+}
+
+/*ヘッダー*/
+.header-area {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+    background-color: #a2d0d0;
+}
+
+/* 中央に配置したいラッパー */
+.title-with-icon {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.title-with-icon h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.title-with-icon i {
+    font-size: 18px;
+    color: #333;
+}
+
+
+
+.login-button {
+    background-color: #e0f0f0;
+    color: #333; /* ボタンの文字色 */
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 32px;
+}
+
+
+.cancel-button{
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.save-button{
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.main-card {
+    background-color: #f0f0f0;
+    width: 80%;
+    max-width: 600px;
+    padding: 10px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.small-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    gap: 16px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.small-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    aspect-ratio: 1 / 1;
+}
+
+.card-icon{
+    color: #a2d0d0;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+/* チェックリスト全体を包むラッパー */
+.checklist-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    box-sizing: border-box;
+    margin: 0 auto; /* ← コンテンツ自体も中央に配置 */
+    width: 350px; /* 内容に合わせた幅 */
+}
+
+/*チェックリスト*/
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.checklist li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-event-btn {
+  position: fixed;
+  bottom: 80px; /* フッターメニューの上に重ならないように調整 */
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #a2d0d0;
+  color: white;
+  font-size: 24px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.add-event-btn:hover {
+  background-color: #8fc0c0;
+}
+
+/*メニューボタン*/
+
+.bottom-menu {
+    position: fixed; /* 画面下部に固定 */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* メニューの高さ */
+    background-color: #f0f0f0; /* メニューの背景色 */
+    display: flex; /* ボタンを横並びにする */
+    justify-content: space-around; /* ボタンを均等に配置 */
+    align-items: center; /* ボタンを上下中央に配置 */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 上部に影をつける */
+    z-index: 1000; /* 他の要素より手前に表示 */
+}
+
+.menu-button {
+    background-color: transparent;
+    border: none;
+    color: #333; /* ボタンの文字色 */
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; /* アイコンとテキストを縦に並べる場合 */
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1; /* 各ボタンが均等に幅を取るようにする */
+    height: 100%;
+    padding: 5px 0;
+    margin-top: 5px;
+    font-size: 24px; /* テキストのフォントサイズ */
+    text-decoration: none;
+}
+
+.bottom-menu p{
+    font-size: 12px;
+    margin-top: 0;
+}
+
+.select{
+    color: #a2d0d0; /* ボタンの文字色 */
+}
+
+.menu-button:hover {
+    background-color: #e0e0e0; /* ホバー時の背景色 */
+}
+
+.menu-button:active {
+    background-color: #d0d0d0; /* クリック時の背景色 */
+}
+
+.menu-button span {
+    display: block;
+}
+
+/*テンプレート名変更モーダル*/
+.modal {
+  display: none; /* 初期は非表示 */
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+
+  /* ★ ここが中央配置のポイント */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#cancelModal {
+  background-color: #ccc;
+}
+
+#saveModal {
+  background-color: #a2d0d0;
+  color: white;
+}
+
+
+/* 持ち物の追加モーダル */
+/* 持ち物の追加モーダル */
+.add-modal-overlay {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  background: rgba(0,0,0,0.3);
+  overflow: hidden;
+  transition: height 0.3s ease;
+  z-index: 1500; /* 既存モーダルより低めに */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* モーダル本体 */
+.add-modal {
+  background: #fff;
+  height: 50vh;
+  width: 100%;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+/* モーダルが開いているとき */
+.add-modal-overlay.active {
+  height: 100%;
+}
+
+.add-modal-overlay.active .add-modal {
+  transform: translateY(0);
+}
+
+.add-modal h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.add-modal input[type="text"] {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.add-modal button {
+  background-color: #a2d0d0;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-modal button:hover {
+  background-color: #8fc0c0;
+}
+

@@ -10,19 +10,19 @@
 
     <body>
         <div class="header-area">
-            <button class="hamburger-button" aria-label="menu">
-                <span>
-                    <i class="fa-solid fa-bars"></i>
-                </span>
-            </button>
-
-            <h1>Mochimon</h1>
+        
+            <h1>M o c h i m o n</h1>
             
-            <a href="Login.html" class="login-button">
+            <a id="user-icon-btn" href="../Login.html" class="login-button">
                 <span>
                     <i class="fa-regular fa-user"></i>
                 </span>
             </a>
+        </div>
+
+        <div class="dashboard" id="share-dashboard">
+            
+
         </div>
 
         <nav class="bottom-menu">
@@ -54,9 +54,42 @@
                 <span class="select">
                     <i class="fa-solid fa-share-nodes"></i>
                 </span>
-                <p>共有</p>
+                <p class="select">共有</p>
             </a>
         </nav>
+
+        <button id="add-event-btn" class="add-event-btn" aria-label="予定を追加">
+            <i class="fa-solid fa-share-nodes"></i>
+        </button>
+
+        <div id="modal-overlay" class="modal-overlay">
+            <div class="modal-content">
+                <button id="close-modal" class="close-btn" aria-label="閉じる">&times;</button>
+                <h2>共有する</h2>
+                
+                <input type="text" placeholder="あなたの名前" id="your-name" />
+                <input type="email" placeholder="相手のメールアドレス" id="receiver-email" />
+
+                <hr>
+                <p>共有する予定を選択</p>
+
+                <div class="overlay-dashboard" id="dashboard">
+                    
+
+                </div>
+
+                <hr>
+
+                <button id="submit-event" class="send-btn">共有</button>
+
+            </div>
+        </div>
+
+        <script type="module" src="Share.js">
+
+
+        </script>
+
 
     </body>
 

@@ -10,17 +10,22 @@
 
     <body>
         <div class="header-area">
-            <button class="hamburger-button" aria-label="menu">
-                <span>
-                    <i class="fa-solid fa-bars"></i>
-                </span>
-            </button>
+
+            <a>
+                <button class="cancel-button" id="return">＜戻る</button>
+            </a>
+            <h3 id="eventHeader"><br>
+            </h3>
+
+        </div>
+
+        <div class="checklist-container">
+            <div id="progress">0%</div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill"></div>
+            </div>
             
-            <button class="login-button">
-                <span>
-                    <i class="fa-regular fa-user"></i>
-                </span>
-            </button>
+            <ul class="checklist"></ul>
         </div>
 
         <nav class="bottom-menu">
@@ -28,24 +33,38 @@
                 <span>
                     <i class="fa-solid fa-house"></i>
                 </span>
+                <p>ホーム</p>
             </a>
-            <a href="#" class="menu-button">
-                <span class="select">
+            <a href="Calendar.html" class="menu-button">
+                <span>
                     <i class="fa-regular fa-calendar-days"></i>
                 </span>
+                <p>カレンダー</p>
             </a>
-            <button class="menu-button">
+            <a href="Template.html" class="menu-button">
                 <span>
                     <i class="fa-solid fa-bookmark"></i>
                 </span>
-            </button>
-            <button class="menu-button">
+                <p>テンプレート</p>
+            </a>
+            <a href="Shopping.html" class="menu-button">
                 <span>
                     <i class="fa-solid fa-cart-shopping"></i>
                 </span>
-            </button>
+                <p>買い物リスト</p>
+            </a>
+            <a href="Share.html" class="menu-button">
+                <span>
+                    <i class="fa-solid fa-share-nodes"></i>
+                </span>
+                <p>共有</p>
+            </a>
         </nav>
 
+        <script type="module" src="SelectDate.js">
+            
+        </script>
+  
     </body>
 
 </html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="EditTemplate.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+        <title>テンプレート編集</title>
+    </head>
+
+    <body>
+        <div class="header-area">
+            <a>
+                <button class="cancel-button" id="cancel">＜戻る</button>
+            </a>
+            <div class="title-with-icon" id="title-icon">
+                <h3 id="title"></h3>   
+                <i class="fa-solid fa-pencil"></i> 
+            </div>   
+            <a>
+                <button class="save-button" id="save">保存</button>
+            </a>      
+        </div>
+
+
+        <div class="checklist-container">
+            
+            <ul class="checklist">
+                
+            </ul>
+        </div>
+
+        <button id="add-event-btn" class="add-event-btn" aria-label="予定を追加">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+
+        <nav class="bottom-menu">
+            <a href="Home.html" class="menu-button">
+                <span>
+                    <i class="fa-solid fa-house"></i>
+                </span>
+                <p>ホーム</p>
+            </a>
+            <a href="Calendar.html" class="menu-button">
+                <span>
+                    <i class="fa-regular fa-calendar-days"></i>
+                </span>
+                <p>カレンダー</p>
+            </a>
+            <a href="Template.html" class="menu-button">
+                <span class="select">
+                    <i class="fa-solid fa-bookmark"></i>
+                </span>
+                <p class="select">テンプレート</p>
+            </a>
+            <a href="Shopping.html" class="menu-button">
+                <span>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </span>
+                <p>買い物リスト</p>
+            </a>
+            <a href="Share.html" class="menu-button">
+                <span>
+                    <i class="fa-solid fa-share-nodes"></i>
+                </span>
+                <p>共有</p>
+            </a>
+        </nav>
+
+        <!-- テンプレート名編集モーダル -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <h2>タイトルを変更</h2>
+                <input type="text" id="templateNameInput" placeholder="テンプレート名を入力" />
+                <div class="modal-buttons">
+                    <button id="cancelModal">キャンセル</button>
+                    <button id="saveModal">保存</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 持ち物追加モーダル -->
+        <div id="addModalOverlay" class="add-modal-overlay">
+            <div class="add-modal">
+                <h2>持ち物を追加</h2>
+                <input type="text" id="addItemInput" placeholder="持ち物を入力してください" />
+                <button id="addItemSaveBtn">追加</button>
+                <button id="addItemCancelBtn" style="margin-top:8px; background:#ccc; color:#000;">キャンセル</button>
+            </div>
+        </div>
+
+        <script type="module" src="EditTemplate.js"></script>
+    </body>
+
+</html>

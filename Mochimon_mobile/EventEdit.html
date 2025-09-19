@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="EventEdit.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="overlay" id="layer">
+        <div class="event-form">
+            <div class="form-header">
+                <button class="cancel-button">キャンセル</button>
+                <div class="form-title">予定の編集</div>
+                <button class="save-button">保存</button>
+            </div>
+
+            <div class="form-body">
+                <div class="form-section">
+                    <input type="text" id="event-title" placeholder="タイトル" />
+                </div>
+
+                <div class="form-section">
+                    <div class="form-row">
+                        <span class="form-label">終日予定</span>
+                        <label class="toggle-container">
+                            <input type="checkbox" id="all-day-toggle" />
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <span class="form-label">開始</span>
+                        <div class="datetime-display">
+                            <input type="date" class="box" id="start-date-box" />
+                            <input type="time" class="box" id="start-time-box" step="300" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <span class="form-label">終了</span>
+                        <div class="datetime-display">
+                            <input type="date" class="box" id="end-date-box" />
+                            <input type="time" class="box" id="end-time-box" step="300" />
+                        </div>
+                    </div>
+                </div>
+
+                <button id="add-item-button">
+                    <i class="fa-solid fa-plus"></i> 持ち物を追加・削除
+                </button>
+                
+                <div class="form-section">
+                    <h3>持ち物リスト</h3>
+                    <ul id="checklist"></ul>
+                </div>
+
+            </div>
+            <div class="form-footer">
+                <button class="delete-button">
+                    <i class="fas fa-trash"></i>　削除
+                </button>
+                <button class="copy-button">
+                    <i class="fas fa-copy"></i>　コピー
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="EventEdit.js">
+
+    </script>
+</body>
+
+</html>
